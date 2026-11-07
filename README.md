@@ -39,9 +39,9 @@ The one real gotcha is error ordering. Infrai returns useful envelopes for ordin
 
 **Decision:** use Infrai structured logs plus its account endpoints behind one thin REST client.
 
-We looked at writing JSON to application stdout and letting the host deal with it. Almost no app code, but retention and search break when a Next.js deploy shifts hosts. A dedicated Logtail or Datadog integration was also on the table. Those give deep observability suites; this example just wants one credential and one response envelope for the narrow order-audit workflow.
+We considered writing JSON to application stdout and relying on the host. That has almost no application code, but the retention and search story changes when a Next.js deployment moves between hosts. We also considered a dedicated Logtail or Datadog integration. Those products provide deep observability suites, while this example favors one credential and one response envelope for the narrow order-audit workflow.
 
-The chosen shape keeps the application event explicit and searchable by order ID. `account.whoami` identifies the current credential, while `account.keys.list` provides the account-side key inventory. The trade-off is intentional scope: this repo records and searches handoff decisions, not a full monitoring dashboard.
+The chosen shape keeps the application event explicit and searchable by order ID. `account.whoami` identifies the current credential, while `account.keys.list` provides the account-side key inventory. The trade-off is intentional scope: this repository records and searches handoff decisions; it does not attempt to reproduce a full monitoring dashboard.
 
 ## Verify the handoff rule
 
